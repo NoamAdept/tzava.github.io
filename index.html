@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Discover IDF Intelligence Roles</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap');
+
+    :root {
+      --idf-green: #2c3531;
+      --idf-light: #000000;
+      --idf-accent: #61892f;
+      --idf-dark: #1e211e;
+      --card-bg: rgba(255, 255, 255, 0.07);
+      --glass: rgba(255, 255, 255, 0.1);
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--idf-green);
+      color: var(--idf-light);
+      background-image: url('./img/kotel.png');
+      background-size: cover;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+    }
+
+    header {
+      background: var(--glass);
+      padding: 1rem;
+      text-align: center;
+      border-bottom: 1px solid var(--idf-light);
+      backdrop-filter: blur(6px);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      color: var(--idf-accent);
+    }
+
+    header p {
+      font-style: italic;
+      color: var(--idf-light);
+    }
+
+    main {
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .card {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border-radius: 18px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .card img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .button {
+      background: var(--idf-accent);
+      color: white;
+      padding: 0.6rem 1.4rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+      transition: background 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #3a5f1b;
+    }
+
+    input, select {
+      padding: 0.5rem;
+      margin: 0.5rem 0;
+      width: 100%;
+      border-radius: 6px;
+      border: 1px solid #666;
+      background: #1e1e1e;
+      color: #eee;
+    }
+
+    input::placeholder {
+      color: #bbb;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #gameContainer {
+      animation: fadeIn 0.5s ease-in-out;
+      background: var(--glass);
+    }
+
+    /* Highlight style for the best role card */
+    .highlight {
+      border: 5px solid var(--idf-accent);
+      transform: scale(1.05);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      main {
+        padding: 1rem;
+      }
+
+      .card {
+        padding: 1rem;
+        margin: 1.2rem 0;
+      }
+
+      .card img {
+        max-width: 100%;
+      }
+
+      header h1 {
+        font-size: 1.8rem;
+      }
+
+      header p {
+        font-size: 0.95rem;
+      }
+
+      .button {
+        width: 100%;
+        padding: 0.8rem;
+      }
+
+      input, select {
+        font-size: 1rem;
+      }
+
+      .requirements {
+        margin-top: 1rem;
+        text-align: left;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.1);
+        border-left: 4px solid var(--idf-accent);
+        padding: 0.8rem 1rem;
+        border-radius: 8px;
+      }
+
+      .requirements h4 {
+        margin: 0 0 0.4rem 0;
+        font-size: 1.1rem;
+        color: var(--idf-accent);
+      }
+
+      .requirements ul {
+        list-style: disc;
+        margin: 0;
+        padding-left: 1.2rem;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Discover IDF Intelligence Roles</h1>
+    <p>Learn about the roles and test your skills with magical mini-games!</p>
+  </header>
+
+  <main>
+    <!-- Personality Quiz Section -->
+    <section id="quizContainer" class="card">
+      <h2>Personality Quiz</h2>
+      <p>Answer the questions below to discover which intelligence role best fits your personality.</p>
+      <form id="quizForm">
+        <label for="workPreference">1. What type of work excites you the most?</label>
+        <select id="workPreference" name="workPreference">
+          <option value="">Select an option</option>
+          <option value="cyber">Solving tech puzzles & defending digital systems</option>
+          <option value="language">Decoding languages and cultural nuances</option>
+          <option value="arabic">Interpreting live, dynamic communications</option>
+          <option value="engineering">Building and troubleshooting cutting-edge tech</option>
+        </select>
+        <br>
+        <label for="challengeLevel">2. How do you handle challenges?</label>
+        <select id="challengeLevel" name="challengeLevel">
+          <option value="">Select an option</option>
+          <option value="high">I thrive under high pressure</option>
+          <option value="medium">I prefer steady challenges</option>
+          <option value="low">I enjoy a more structured routine</option>
+        </select>
+        <br>
+        <button class="button" type="button" onclick="submitQuiz()">Submit Quiz</button>
+      </form>
+    </section>
+
+    <!-- Roles Section (Initially Hidden) -->
+    <div id="rolesContainer" class="hidden">
+      <!-- Best Role Message will be inserted here -->
+      <section class="card">
+        <img src="./img/gama.png" alt="Gam'A Cyber">
+        <h2>Gam'A Cyber</h2>
+        <p><strong>Role:</strong> Cyber defense specialists protecting Israel’s digital frontlines.</p>
+        <div class="requirements">
+          <h4>Requirements</h4>
+          <ul>
+            <li>Exceptional skills in computer science, algorithms, or cybersecurity</li>
+            <li>Proven experience in coding, hacking, or systems architecture</li>
+            <li>High score in Yom HaMea and top-tier profile evaluation (Dapar)</li>
+            <li>Successful completion of a multi-stage screening and security clearance</li>
+          </ul>
+        </div>
+        <div class="requirements">
+          <h4>Day-to-Day</h4>
+          <ul>
+            <li><strong>08:00</strong> – Unit meeting & threat intel briefing</li>
+            <li><strong>09:00</strong> – Work on malware reverse engineering task</li>
+            <li><strong>11:30</strong> – Team debugging session</li>
+            <li><strong>13:00</strong> – Lunch & quick team strategy game</li>
+            <li><strong>14:00</strong> – Develop or test cyber tools in sandbox environments</li>
+            <li><strong>16:30</strong> – Internal lecture or guest speaker from defense industry</li>
+          </ul>
+        </div>
+        <button class="button" onclick="startGame('codeDefender')">Play Code Defender</button>
+      </section>
+
+      <section class="card">
+        <img src="./img/foreign.png" alt="Foreign Language">
+        <h2>Foreign Language Intelligence</h2>
+        <p><strong>Role:</strong> Translators bridging global intelligence gaps into Hebrew.</p>
+        <div class="requirements">
+          <h4>Requirements</h4>
+          <ul>
+            <li>Fluency or native-level proficiency in a critical foreign language</li>
+            <li>Strong comprehension and analysis skills</li>
+            <li>Excellent Hebrew for accurate translation/adaptation</li>
+            <li>Top-level security clearance and successful screening process</li>
+          </ul>
+        </div>
+        <div class="requirements">
+          <h4>Day-to-Day</h4>
+          <ul>
+            <li><strong>07:30</strong> – Sitrep on new intercepts from the past 24 hours</li>
+            <li><strong>08:30</strong> – Translate raw audio/video/text into Hebrew</li>
+            <li><strong>11:00</strong> – Analyze tone, dialect, and cultural nuances</li>
+            <li><strong>13:00</strong> – Lunch with your unit and language games</li>
+            <li><strong>14:00</strong> – Work with intelligence analysts to contextualize content</li>
+            <li><strong>16:00</strong> – Drill session on language variants or slang terms</li>
+          </ul>
+        </div>
+        <button class="button" onclick="startGame('translationSprint')">Play Translation Sprint</button>
+      </section>
+
+      <section class="card">
+        <img src="./img/translator.png" alt="Arabic Intelligence">
+        <h2>Arabic Intelligence</h2>
+        <p><strong>Role:</strong> Experts interpreting intercepted Arabic communications in real time.</p>
+        <div class="requirements">
+          <h4>Requirements</h4>
+          <ul>
+            <li>Fluent spoken and written Arabic (various dialects a plus)</li>
+            <li>High performance in psychometric testing and language screening</li>
+            <li>Cultural awareness and contextual analysis abilities</li>
+            <li>Eligibility for high-level security clearance</li>
+          </ul>
+        </div>
+        <div class="requirements">
+          <h4>Day-to-Day</h4>
+          <ul>
+            <li><strong>07:00</strong> – Monitor live feeds from key regions</li>
+            <li><strong>09:00</strong> – Real-time transcription and analysis</li>
+            <li><strong>11:30</strong> – Coordination with field units for intel confirmation</li>
+            <li><strong>13:00</strong> – Lunch & short break</li>
+            <li><strong>14:00</strong> – Translate and annotate communications for analysts</li>
+            <li><strong>15:30</strong> – Study session on tribal or dialectical variations</li>
+          </ul>
+        </div>
+        <button class="button" onclick="startGame('interceptAnalyze')">Play Intercept & Analyze</button>
+      </section>
+
+      <section class="card">
+        <img src="./img/electronics.png" alt="Sigma Plan">
+        <h2>Sigma Plan</h2>
+        <p><strong>Role:</strong> Engineering minds building and maintaining advanced tech systems.</p>
+        <div class="requirements">
+          <h4>Requirements</h4>
+          <ul>
+            <li>Excellence in physics, electronics, or computer engineering</li>
+            <li>Proven technical skills or experience with robotics, circuits, or programming</li>
+            <li>High Yom HaMea or psychometric scores in technical sections</li>
+            <li>Completion of a rigorous screening process including interviews and tests</li>
+            <li>Security clearance</li>
+          </ul>
+        </div>
+        <div class="requirements">
+          <h4>Day-to-Day</h4>
+          <ul>
+            <li><strong>08:00</strong> – Briefing on new engineering challenges or device tasks</li>
+            <li><strong>09:00</strong> – Circuit design and simulation in lab environment</li>
+            <li><strong>12:00</strong> – Code microcontroller logic and test integrations</li>
+            <li><strong>13:00</strong> – Lunch and team brainstorms</li>
+            <li><strong>14:00</strong> – Hardware debugging or field tests</li>
+            <li><strong>16:30</strong> – Write engineering documentation or present findings</li>
+          </ul>
+        </div>
+        <button class="button" onclick="startGame('circuitBuilder')">Play Circuit Builder</button>
+      </section>
+    </div>
+
+    <!-- Existing game container remains unchanged -->
+    <section id="gameContainer" class="card hidden">
+      <h2 id="gameTitle"></h2>
+      <div id="gameContent"></div>
+      <button class="button" onclick="closeGame()">Exit Game</button>
+    </section>
+  </main>
+
+  <script>
+    function submitQuiz() {
+      // Retrieve quiz answers (using workPreference for role selection)
+      const workPreference = document.getElementById('workPreference').value;
+      let bestRole = '';
+
+      if (workPreference === 'cyber') {
+        bestRole = "Gam'A Cyber";
+      } else if (workPreference === 'language') {
+        bestRole = "Foreign Language Intelligence";
+      } else if (workPreference === 'arabic') {
+        bestRole = "Arabic Intelligence";
+      } else if (workPreference === 'engineering') {
+        bestRole = "Sigma Plan";
+      } else {
+        bestRole = "an undisclosed role"; // fallback if nothing is selected
+      }
+
+      // Create a best role message div
+      const bestRoleMessage = document.createElement('div');
+      bestRoleMessage.id = 'bestRoleMessage';
+      bestRoleMessage.style.padding = "1rem";
+      bestRoleMessage.style.marginBottom = "1.5rem";
+      bestRoleMessage.style.border = "2px solid var(--idf-accent)";
+      bestRoleMessage.style.borderRadius = "10px";
+      bestRoleMessage.style.background = "rgba(255,255,255,0.1)";
+      bestRoleMessage.innerHTML = `<h3>We think the best role for you is: ${bestRole}</h3>`;
+
+      // Insert the best role message at the top of the roles container
+      const rolesContainer = document.getElementById('rolesContainer');
+      rolesContainer.insertBefore(bestRoleMessage, rolesContainer.firstChild);
+
+      // Highlight the matching role card
+      const roleCards = rolesContainer.getElementsByClassName('card');
+      for (let card of roleCards) {
+        let h2Text = card.querySelector('h2')?.textContent || "";
+        if (h2Text === bestRole) {
+          card.classList.add('highlight');
+        }
+      }
+
+      // Hide quiz and reveal roles
+      document.getElementById('quizContainer').classList.add('hidden');
+      rolesContainer.classList.remove('hidden');
+      rolesContainer.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Existing game-related functions
+    function startGame(game) {
+      const gameContainer = document.getElementById('gameContainer');
+      const gameTitle = document.getElementById('gameTitle');
+      const gameContent = document.getElementById('gameContent');
+
+      gameContainer.classList.remove('hidden');
+      gameContent.innerHTML = '';
+
+      if (game === 'codeDefender') {
+        gameTitle.textContent = 'Code Defender';
+        gameContent.innerHTML = `
+          <p><strong>URGENT:</strong> The following script is suspected of malware injection. Which variable is most suspicious?</p>
+          <pre style="text-align:left; background:#1e1e1e; color:#eee; padding:1rem; border-radius:10px;">
+    const token = "ABC123";
+    const user = "admin";
+    const executeMalicious = true;
+    const cleanUp = false;
+          </pre>
+          <select id="cyberSelect">
+            <option value="">Select a variable</option>
+            <option>token</option>
+            <option>user</option>
+            <option>executeMalicious</option>
+            <option>cleanUp</option>
+          </select>
+          <button class="button" onclick="checkAnswer('cyberSelect', 'executemalicious')">Submit</button>
+        `;
+      } else if (game === 'translationSprint') {
+        gameTitle.textContent = 'Translation Sprint';
+        gameContent.innerHTML = `
+          <p><strong>Translate:</strong> What does the Spanish word <em>"veloz"</em> mean?</p>
+          <select id="translateSelect">
+            <option value="">Choose your answer</option>
+            <option>soft</option>
+            <option>quick</option>
+            <option>old</option>
+            <option>sharp</option>
+          </select>
+          <button class="button" onclick="checkAnswer('translateSelect', 'quick')">Submit</button>
+        `;
+      } else if (game === 'interceptAnalyze') {
+        gameTitle.textContent = 'Intercept & Analyze';
+        gameContent.innerHTML = `
+          <p><strong>Context:</strong> You're listening to a regional dialect intercepted near the border. <br>
+          <em>"Huwa mish hawn, raah la el souq."</em></p>
+          <p>What does this most likely mean?</p>
+          <select id="arabicSelect">
+            <option>He is not here, he went to the market.</option>
+            <option>He works at the market every day.</option>
+            <option>He came back from the border.</option>
+            <option>He is eating at the base.</option>
+          </select>
+          <button class="button" onclick="checkAnswer('arabicSelect', 'he is not here, he went to the market.')">Submit</button>
+        `;
+      } else if (game === 'circuitBuilder') {
+        gameTitle.textContent = 'Circuit Builder';
+        gameContent.innerHTML = `
+          <p>You’re building a signal booster. Which part amplifies voltage the most?</p>
+          <select id="circuitSelect">
+            <option>Transistor</option>
+            <option>Resistor</option>
+            <option>Diode</option>
+            <option>Capacitor</option>
+          </select>
+          <button class="button" onclick="checkAnswer('circuitSelect', 'transistor')">Submit</button>
+        `;
+      }
+      gameContainer.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function checkAnswer(inputId, correctValue) {
+      const userInput = document.getElementById(inputId).value.trim().toLowerCase();
+      const cleanAnswer = correctValue.toLowerCase();
+      if (userInput === cleanAnswer) {
+        alert("✅ Correct! Well done.");
+      } else {
+        alert("❌ Incorrect. Try again!");
+      }
+    }
+
+    function closeGame() {
+      document.getElementById('gameContainer').classList.add('hidden');
+      document.getElementById('gameTitle').textContent = '';
+      document.getElementById('gameContent').innerHTML = '';
+    }
+  </script>
+</body>
+</html>
